@@ -1,0 +1,17 @@
+---
+- name: Start up
+  hosts: all
+  user: root
+
+  tasks:
+  - name: Prepare directory
+    file:
+      dest: /etc/ansible/facts.d
+      state: directory
+
+  - name: Upload custom fact
+    copy:
+      src: facts/do_region
+      dest: /etc/ansible/facts.d/do_region.fact
+      mode: 0755
+

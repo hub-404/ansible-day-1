@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+from ansible.module_utils.basic import *
+
+module = AnsibleModule(
+    argument_spec = dict(
+        hour = dict(default=12,type='int'),
+    ),
+    supports_check_mode=True,
+)
+
+def main():
+    from datetime import datetime
+    lunch_hour = module.params['hour']
+    got_hour = datetime.now().hour
+    if got_hour == lunch_hour:
+        module.fail_json(msg="It's lunchtime")
+    else:
+        module.exit_json(changed=False, msg="It's OK", got=got_hour, expected=lunch_hour)
+
+if __name__ == '__main__':
+    main()

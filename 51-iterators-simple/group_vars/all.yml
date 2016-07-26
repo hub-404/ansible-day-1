@@ -1,0 +1,5 @@
+---
+common_packages:  
+   - vim
+   - psmisc
+   - mc

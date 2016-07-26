@@ -1,0 +1,11 @@
+---
+- name: Fix motd
+  hosts: all
+  user: root
+
+  tasks:
+  - name: Fix motd
+    template:
+      src: templates/motd.j2
+      dest: /etc/motd
+

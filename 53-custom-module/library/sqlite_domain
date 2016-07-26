@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+#import json
+from ansible.module_utils.basic import *
+
+module = AnsibleModule(
+    argument_spec = dict(
+        state     = dict(default='present', choices=['present', 'absent']),
+        datafile  = dict(required=True),
+        domain     = dict(required=True),
+        master    = dict(required=True),
+        type      = dict(default='slave', choices=['master','slave']),
+#        something = dict(aliases=['whatever'])
+    ),
+    supports_check_mode=False
+)
+
+def main():
+    import sqlite3
+
+    domain_name = module.params['domain']
+    domain_master = module.params['master']
+    domain_type   = module.params['type'].upper()
+
+    database = sqlite3.connect(module.params['datafile'])
+    cursor = database.cursor()
+    cursor.execute('SELECT type,master FROM domains WHERE name=?', [domain_name])
+    result = cursor.fetchall()
+    if len(result) == 0:
+        cursor.execute('INSERT into DOMAINS(name,master,type) VALUES (?,?,?)',
+                    [domain_name, domain_master, domain_type])
+        database.commit()
+        module.exit_json(changed=True, msg="Added domain %s" % domain_name)
+        return
+    if len(result) > 1:
+        module.fail_json(msg="Got more than two results for domains %s" % domain_name)
+        return
+    if result[0][0] == domain_type and result[0][1] == domain_master:
+        module.exit_json(changed=False)
+        return
+    cursor.execute('UPDATE DOMAINS SET master=?, type=? WHERE name=?',
+                [domain_master, domain_type, domain_name])
+    database.commit()
+    module.exit_json(changed=True, msg="Updated domain %s" % domain_name)
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,19 @@
+---
+- name: Add line to database
+  hosts: all
+  user: root
+  gather_facts: no
+
+  vars:
+     database_file: /tmp/my-database
+     database_create: 'CREATE TABLE domains(name VARCHAR, master VARCHAR, type VARCHAR);'
+
+  tasks:
+
+  - name: Create sqlite database
+    shell: 
+       sqlite3 {{ database_file }} "{{ database_create }}"
+    args:
+      creates: /tmp/my-database
+
+

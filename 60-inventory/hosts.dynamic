@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+random=$( sort -R hosts.txt | head -1 )
+
+cat <<EOF
+{
+  "all ": [
+    "$random", 
+  ], 
+  "_meta": {
+     "hostvars": {
+       "$random": { 
+		"ansible_ssh_user": "root" 
+	}
+     }
+  }
+}
+EOF

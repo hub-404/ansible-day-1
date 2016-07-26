@@ -1,0 +1,1 @@
+ansible -m setup -i hosts.do all -a filter=ansible_local -u root

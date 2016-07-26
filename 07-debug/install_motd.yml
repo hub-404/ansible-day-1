@@ -1,0 +1,33 @@
+---
+- name: Fix motd
+  hosts: all
+  user: root
+
+  tasks:
+  - name: Fix motd
+    copy:
+      content: "Welcome to {{ ansible_fqdn }}"
+      dest: /etc/motd
+
+  - name: Check motd exists
+    file: dest=/etc/motd state=file
+    register: motd_exists
+
+  - debug: var=motd_exists
+
+  - debug: 
+      msg: "{{ item }}"
+    with_sequence: count=4
+    when: False
+
+  - debug: 
+      msg: "{{ item }}"
+    with_random_choice:
+         [ 1, 2, 3, 4, 5, 6]
+
+file:
+  src: "/file/to/link/to"
+  dest: "/path/to/symlink"
+  owner: foo
+  group: foo
+  state: link

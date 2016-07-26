@@ -1,0 +1,19 @@
+---
+- name: Start up
+  hosts: all
+  user: root
+  gather_facts: no
+
+  tasks:
+  - name: Prepare directory
+    file:
+      dest: /etc/ansible/facts.d
+      state: directory
+
+  - name: Upload custom fact
+    copy:
+      src: "{{ item }}"
+      dest: "/etc/ansible/facts.d/{{ item | basename }}.fact"
+      mode: 0755
+    with_fileglob: "facts/*"
+

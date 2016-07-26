@@ -1,0 +1,22 @@
+---
+- name: Start up
+  hosts: all
+  user: root
+  gather_facts: no
+
+  vars: 
+     files_to_copy: [ do_region, do_droplet_id ]
+
+  tasks:
+  - name: Prepare directory
+    file:
+      dest: /etc/ansible/facts.d
+      state: directory
+
+  - name: Upload custom fact
+    copy:
+      src: "facts/{{ item }}"
+      dest: "/etc/ansible/facts.d/{{ item }}.fact"
+      mode: 0755
+    with_items:  files_to_copy
+
