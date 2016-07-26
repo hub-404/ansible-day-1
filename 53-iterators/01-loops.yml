@@ -1,0 +1,12 @@
+---
+- name: Iterators demo
+  hosts: all
+
+  tasks:
+  - name: Enable some services
+    service: 
+      name: '{{ name }}'
+      enabled: true
+    with_items: 
+       - ssh
+       - nginx

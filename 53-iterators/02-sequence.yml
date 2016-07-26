@@ -1,0 +1,16 @@
+---
+- name: Show sequences
+  hosts: all
+  user: root
+
+  tasks:
+  - debug: 
+      msg: "{{ item }}"
+    with_sequence: count=4
+    when: False
+
+  - debug: 
+      msg: "{{ item }}"
+    with_random_choice:
+         [ 1, 2, 3, 4, 5, 6 ]
+
