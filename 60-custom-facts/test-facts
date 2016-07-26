@@ -1,0 +1,1 @@
+ansible -m setup all -a filter=ansible_local

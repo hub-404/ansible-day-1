@@ -1,0 +1,2 @@
+- role: jtyr.yumrepo
+- role: geerlingguy.jenkins

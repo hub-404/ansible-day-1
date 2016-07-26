@@ -1,0 +1,11 @@
+---
+- name: Destroy all hosts
+  hosts: all
+  gather_facts: no
+  tasks:
+   - name: Destroy machine
+     digital_ocean:
+          api_token: "{{do_token}}" 
+          id: "{{ droplet_id }}"
+          state: deleted
+     delegate_to: localhost

@@ -1,1 +1,19 @@
-This directory is empty
+# This directory is empty
+
+# commands tested
+
+ansible -m ping all
+
+ansible -m ping all -v
+
+ansible --list-hosts all
+
+ansible -m shell all -u ansible --become -a "id"
+
+ansible -m shell all -u root -a "id"
+
+ansible -m shell all -a "id"
+
+ansible -m yum all -a "name=mc state=installed"
+
+ansible all -a "init 6"

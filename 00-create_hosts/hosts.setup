@@ -1,0 +1,5 @@
+[digitalocean]
+ansible-[000:005]      do_region=ams2
+ansible-[006:010]      do_region=fra1
+ansible-[010:015]      do_region=lon1
+

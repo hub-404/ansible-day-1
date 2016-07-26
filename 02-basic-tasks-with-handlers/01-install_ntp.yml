@@ -1,8 +1,6 @@
 ---
 - name: Install chrony and start it
   hosts: all
-  become: true
-  become_user: root
 
   tasks:
   - name: Install chrony
@@ -12,18 +10,16 @@
 
   - name: Provide config file
     copy:
-      src: files/chrony.conf
+      src: chrony.conf
       dest: /etc/chrony.conf
     notify: 
       - Restart chrony
-    register: config_file
 
   - name: Start Chrony
     service:
       name: chronyd
-      state: restarted
+      state: started
       enabled: true
-    when: config_file|changed
 
   handlers:
   - name: "Restart chrony"

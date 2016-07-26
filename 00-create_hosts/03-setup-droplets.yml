@@ -1,0 +1,21 @@
+---
+- name: Start up
+  hosts: all
+  gather_facts: no
+  user: root
+  become_user: ansible
+  become: yes
+  tasks:
+
+
+  - name: Setup .vimrc
+    copy:
+       content: |
+          autocmd BufRead *.yaml,*.yml setlocal syntax=yaml autoindent sw=8 ts=8 sts=8 expandtab colorcolumn=78,120
+          colorscheme ron
+       dest: /home/ansible/.vimrc
+
+  - name: Clone day-1
+    git:
+       dest: /home/ansible/day-001
+       repo: https://github.com/hub-404/ansible-day-1

@@ -1,0 +1,60 @@
+---
+- name: Start up
+  hosts: all
+  gather_facts: no
+  user: root
+
+  tasks:
+  - name: Create user ansible with password XXX
+    user:
+        name: '{{ ssh_user }}'
+        comment: "Ansible" 
+        password: "00./ayknmQFn."
+        createhome: yes
+
+  - name: Add ansible to sudoers
+    copy:
+       src: sudoers_ansible
+       dest: /etc/sudoers.d/ansible
+
+  - name: Install epel
+    yum: name=epel-release state=installed
+
+  - name: Install needed packages
+    yum: name={{item}} state=installed
+    with_items: 
+    - vim
+    - ansible
+    - git
+    - psmisc
+
+  - name: Install cowsay from wild Internet
+    yum:
+      name: http://www.melvilletheatre.com/articles/el7/cowsay-3.03-14.el7.centos.noarch.rpm
+      state: installed
+    with_items:
+    -
+    when: install_cowsay
+
+  - name: Create ssh-key
+    become_user: '{{ ssh_user }}'
+    become: yes
+    shell: ssh-keygen -f {{ ssh_keyfile }} -P ''
+           creates={{ ssh_keyfile }}
+
+  - name: Read SSH pubkey
+    shell: cat {{ ssh_keyfile }}.pub
+    always_run: True
+    changed_when: False
+    register: _ssh_keydata
+
+  - name: Add the key to root
+    authorized_key:
+       key: '{{ _ssh_keydata.stdout }}'
+       user: root
+       state: present
+
+  - name: Setup ansible inventory
+    copy:
+      content: "{{ ansible_host }}    ansible_host={{ ansible_host }} ansible_user=root"
+      dest: /etc/ansible/hosts

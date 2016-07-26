@@ -1,0 +1,4 @@
+---
+ntp_hosts:         
+  - 0.centos.pool.ntp.org 
+  - 2.centos.pool.ntp.org 

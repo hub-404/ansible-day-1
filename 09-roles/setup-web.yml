@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+  - role: nginx
+  - role: welcome-page
+    index_path: /usr/share/nginx/html/index.html
