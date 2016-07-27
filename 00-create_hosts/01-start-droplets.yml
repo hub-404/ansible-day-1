@@ -22,7 +22,7 @@
           size_id="{{do_size}}"
           image_id="{{do_image}}"
           ssh_key_ids="{{do_sshkey}}" 
-    register: droplet	  
+    register: droplet
 
 #  - debug: msg="ID is {{ droplet.droplet.id }}" #"
 #  - debug: msg="IP is {{ droplet.droplet.ip_address }}" #"
