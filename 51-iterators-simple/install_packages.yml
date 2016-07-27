@@ -1,5 +1,5 @@
 ---
-- name: Change ssh keys
+- name: Install common packages
   hosts: all
   user: root
   gather_facts: no
@@ -9,4 +9,4 @@
       yum:
         state: installed
         name: '{{item}}'
-      with_items: common_packages
+      with_items: '{{ common_packages }}'

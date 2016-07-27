@@ -9,7 +9,6 @@ module = AnsibleModule(
         domain     = dict(required=True),
         master    = dict(required=True),
         type      = dict(default='slave', choices=['master','slave']),
-#        something = dict(aliases=['whatever'])
     ),
     supports_check_mode=False
 )
@@ -20,11 +19,20 @@ def main():
     domain_name = module.params['domain']
     domain_master = module.params['master']
     domain_type   = module.params['type'].upper()
+    domain_state  = module.params['state']
 
     database = sqlite3.connect(module.params['datafile'])
     cursor = database.cursor()
     cursor.execute('SELECT type,master FROM domains WHERE name=?', [domain_name])
     result = cursor.fetchall()
+    if len(result) == 0 and domain_state == 'absent':
+        module.exit_json(changed=False)
+	return
+    if len(result) and domain_state == 'absent':
+        cursor.execute('DELETE FROM domains WHERE name=?', [domain_name])
+        database.commit()
+        module.exit_json(changed=True, msg="Deleted domain %s" % domain_name)
+        return
     if len(result) == 0:
         cursor.execute('INSERT into DOMAINS(name,master,type) VALUES (?,?,?)',
                     [domain_name, domain_master, domain_type])

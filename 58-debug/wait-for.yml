@@ -1,0 +1,10 @@
+
+---
+- hosts: ansible-011,ansible-002
+  user: root
+  tasks:
+  - wait_for: 
+          host: 127.0.0.1
+          port: 22
+          timeout: 20
+          search_regex: SSH

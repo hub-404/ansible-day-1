@@ -1,0 +1,13 @@
+---
+- name: Slow tasks
+  hosts: all
+  user: root
+
+  tasks:
+    - debug: msg="Remove from loadbalancer"
+      delegate_to: ansible-001
+
+    - debug: msg="I'm updating webserver"
+
+    - debug: msg="Add to loadbalancer again"
+      delegate_to: ansible-001

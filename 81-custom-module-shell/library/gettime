@@ -1,0 +1,9 @@
+#!/bin/bash
+cat <<EOF
+{ "date": "$( date )",
+  "me": "$0",
+  "params_file": "$*",
+  "params": "$( cat $1 )"
+ }
+EOF
+

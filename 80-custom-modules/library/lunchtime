@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+""" This module raises error during lunchtime
+"""
+
 from ansible.module_utils.basic import *
 
 module = AnsibleModule(

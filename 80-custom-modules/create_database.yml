@@ -7,6 +7,7 @@
   vars:
      database_file: /tmp/my-database
      database_create: 'CREATE TABLE domains(name VARCHAR, master VARCHAR, type VARCHAR);'
+     domain: root.cz
 
   tasks:
 
@@ -14,6 +15,11 @@
     shell: 
        sqlite3 {{ database_file }} "{{ database_create }}"
     args:
-      creates: /tmp/my-database
+      creates: '{{ database_file }}'
 
-
+  - name: Add line
+    sqlite_domain:
+        datafile: '{{ database_file }}'
+        domain: '{{ domain }}'
+        master: 'a.ns.root.cz'
+        state: absent

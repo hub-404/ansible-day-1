@@ -8,12 +8,16 @@
 
   tasks:
     - name: Add keys
-      authorized_key: state=present user={{user_to_change}}
-                      key="{{ lookup('file', item) }}" #"
+      authorized_key: 
+             state: present 
+             user: "{{user_to_change}}"
+             key: "{{ lookup('file', item) }}" #"
       with_fileglob: keys_to_add/*.key
 
     - name: Drop keys
-      authorized_key: state=absent user={{user_to_change}}
-                      key="{{ lookup('file', item) }}" #"
+      authorized_key: 
+             state: absent 
+             user: "{{user_to_change}}"
+             key: "{{ lookup('file', item) }}" #"
       with_fileglob: keys_to_drop/*.key
 

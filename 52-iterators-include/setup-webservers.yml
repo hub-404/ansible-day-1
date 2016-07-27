@@ -1,0 +1,14 @@
+---
+- name: Change ssh keys
+  hosts: all
+  user: root
+  gather_facts: no
+
+  vars:
+    mysites: 
+       - www.root.cz
+       - secure.root.cz
+  tasks:
+    - name: Setup web sites
+      include: setup-one-web.yml
+      with_items: '{{ mysites }}'

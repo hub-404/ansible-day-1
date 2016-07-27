@@ -27,13 +27,13 @@
     - ansible
     - git
     - psmisc
+    - tmux
+    - tree
 
-  - name: Install cowsay from wild Internet
+  - name: Install cowsay from the wild Internet
     yum:
       name: http://www.melvilletheatre.com/articles/el7/cowsay-3.03-14.el7.centos.noarch.rpm
       state: installed
-    with_items:
-    -
     when: install_cowsay
 
   - name: Create ssh-key
@@ -48,13 +48,19 @@
     changed_when: False
     register: _ssh_keydata
 
-  - name: Add the key to root
+  - name: Add the key
+    with_items: [ root, ansible ]
     authorized_key:
        key: '{{ _ssh_keydata.stdout }}'
-       user: root
+       user: '{{ item }}'
        state: present
 
   - name: Setup ansible inventory
     copy:
       content: "{{ ansible_host }}    ansible_host={{ ansible_host }} ansible_user=root"
       dest: /etc/ansible/hosts
+
+  - name: Setup ansible.cfg
+    copy:
+      src: ansible.cfg
+      dest: /etc/ansible/ansible.cfg

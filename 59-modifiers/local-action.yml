@@ -1,0 +1,11 @@
+---
+- name: Slow tasks
+  hosts: all
+  user: root
+
+  tasks:
+    - debug: msg="Remove from loadbalancer"
+      delegate_to: localhost
+
+    - debug: msg="I'm updating webserver"
+

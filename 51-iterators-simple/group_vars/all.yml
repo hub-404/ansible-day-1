@@ -3,3 +3,6 @@ common_packages:
    - vim
    - psmisc
    - mc
+
+extra_packages:
+   - moon-buggy

@@ -1,0 +1,13 @@
+---
+- hosts: ansible-011
+  user: root
+  tasks:
+  - assert:
+      that: '{{ ansible_distribution_major_version|int > 6 }}'
+
+  - name: 'Check ansible version >= 2.0'
+    assert:
+      that:
+          - 'ansible_version.major is number'
+          - 'ansible_version.major >= 2'
+           

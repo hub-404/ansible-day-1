@@ -1,0 +1,16 @@
+---
+- name: Slow tasks
+  hosts: all
+  user: root
+  gather_facts: no
+#  serial: 25%
+  max_fail_percentage: 50
+
+  tasks:
+    - set_fact: _random="{{item}}"
+      with_random_choice:
+         [ 1, 2, 3, 4, 5, 6 ] 
+    - assert: 
+         that: '{{ _random > 1 }}'
+
+    - debug: msg="I'm alive"

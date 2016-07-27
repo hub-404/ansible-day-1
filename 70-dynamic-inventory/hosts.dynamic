@@ -1,19 +1,19 @@
 #!/bin/bash
 
 
-random=$( sort -R hosts.txt | head -1 )
+hosts=$( sort -R hosts.txt )
 
 cat <<EOF
 {
-  "all ": [
-    "$random", 
-  ], 
-  "_meta": {
-     "hostvars": {
-       "$random": { 
-		"ansible_ssh_user": "root" 
-	}
-     }
-  }
+  "all ": {
+	"hosts": [
+EOF
+for i in $hosts; do 
+   echo -n ' ' \"$i\", 
+done
+cat <<EOF
+        ],
+        "vars": { "ansible_user": "root" },
+  }, 
 }
 EOF

@@ -1,0 +1,19 @@
+---
+- name: Change ssh keys
+  hosts: all
+  gather_facts: no
+  vars: 
+     username: user-9
+
+  tasks:
+    - name: Lookup password
+      set_fact:
+         _clear_password: "{{ lookup('password', '.user.password') }}"
+
+    - name: '{{ username }}: Create user'
+      user:
+            name: '{{ username }}'
+            password: "{{ _clear_password|password_hash('sha512')}}" 
+            state: present
+            shell: /bin/bash
+            update_password: on_create

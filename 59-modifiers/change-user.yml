@@ -1,0 +1,12 @@
+---
+- name: Change users
+  hosts: ansible-011
+  user: root
+
+  tasks:
+    - shell: "id -u"
+
+    - shell: "id -u"
+      become: yes
+      become_user: "ansible"
+

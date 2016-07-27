@@ -1,0 +1,15 @@
+---
+- name: Add facts
+  hosts: all
+
+  tasks:
+  - name: Prepare directory
+    file:
+      dest: /etc/ansible/facts.d
+      state: directory
+
+  - name: Upload structured fact
+    copy:
+      content: "[ 1, 2, 3, 42 ]"
+      dest: /etc/ansible/facts.d/answer
+      mode: 0444
