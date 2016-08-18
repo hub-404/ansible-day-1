@@ -26,7 +26,12 @@
 
 #  - debug: msg="ID is {{ droplet.droplet.id }}" #"
 #  - debug: msg="IP is {{ droplet.droplet.ip_address }}" #"
-
+#
+- name: Start up
+  hosts: all
+  gather_facts: no
+  serial: 1
+  tasks:
   - lineinfile: 
        dest: "{{ inventory_path }}/hosts.do"
        line: "{{ inventory_hostname }}   ansible_ssh_host={{ droplet.droplet.ip_address}} droplet_id={{ droplet.droplet.id }}"
