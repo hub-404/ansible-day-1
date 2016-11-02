@@ -3,27 +3,17 @@
   hosts: all
 
   tasks:
-  - name: Install chrony
-    yum: 
-       name: chrony
-       state: installed 
+  - name: Install chrony       
+    yum: name=chrony state=installed
 
   - name: Provide config file
     copy:
       src: chrony.conf
       dest: /etc/chrony.conf
-    notify: 
-      - Restart chrony
 
   - name: Start Chrony
     service:
       name: chronyd
       state: started
       enabled: true
-
-  handlers:
-  - name: "Restart chrony"
-    service:
-       name: chronyd
-       state: restarted
 

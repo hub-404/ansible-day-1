@@ -13,7 +13,7 @@
       src: chrony.conf
       dest: /etc/chrony.conf
     notify: 
-      - Restart chrony
+       - Restart chrony
 
   - name: Start Chrony
     service:
@@ -22,7 +22,7 @@
       enabled: true
 
   handlers:
-  - name: "Restart chrony"
+  - name: Restart chrony
     service:
        name: chronyd
        state: restarted
