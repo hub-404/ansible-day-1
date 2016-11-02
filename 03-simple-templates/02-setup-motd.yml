@@ -1,0 +1,10 @@
+---
+- name: Update motd
+  hosts: all
+
+  tasks:
+  - name: Setup motd
+    copy:
+      content: "Welcome to {{ ansible_all_ipv4_addresses[0] }}\n"
+      dest: /etc/motd
+
