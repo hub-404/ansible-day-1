@@ -1,0 +1,28 @@
+---
+- name: Install ntpd and start it
+  hosts: all
+  
+  tasks:
+  - name: Install ntpd
+    apt: 
+       name: openntpd
+       state: installed
+
+  - name: Provide config file
+    template:
+      src: chrony.conf.j2
+      dest: /etc/openntpd.conf
+    notify: 
+      - Restart ntpd
+
+  - name: Start NTP
+    service:
+      name: openntpd
+      state: restarted
+      enabled: true
+
+  handlers:
+  - name: "Restart ntpd"
+    service:
+       name: openntpd
+       state: restarted
