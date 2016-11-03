@@ -1,0 +1,13 @@
+---
+- name: Create web directory
+  hosts: all
+  tasks:
+  - name: Create diretory
+    file:
+      path: /var/www/magic
+      state: directory
+    register: _made_directory
+
+  - name: Create password
+    shell: 'ps ax | md5sum > /tmp/www/magic/password.txt'
+

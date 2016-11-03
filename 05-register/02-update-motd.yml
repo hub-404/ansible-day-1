@@ -1,0 +1,17 @@
+---
+- name: Create MOTD
+  hosts: all
+  tasks:
+  - name: Check MOTD exists
+    file:
+      path: /etc/motd
+      state: file
+    register: _motd_exists
+    ignore_errors: yes
+
+  - name: Create MOTD when needed
+    copy:
+       content: "This machine is managed by Ansible"
+       dest: /etc/motd
+    when: _motd_exists|failed
+
