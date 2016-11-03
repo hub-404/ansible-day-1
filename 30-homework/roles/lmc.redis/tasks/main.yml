@@ -9,4 +9,4 @@
   service:
       name: '{{ redis_service_name }}'
       state: '{{ redis_service_state }}'
-      enable: '{{ redis_service_enabled }}'
+      enabled: '{{ redis_service_enabled }}'
