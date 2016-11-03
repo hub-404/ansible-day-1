@@ -1,0 +1,17 @@
+---
+- name: NTP and start it
+  hosts: all
+  tasks:
+
+  - name: Install chrony
+    yum: 
+       name: chrony
+       state: installed 
+    when: ansible_os_family == 'RedHat'
+
+  - name: Install ntp
+    apt: 
+       name: openntpd
+       state: installed 
+    when: ansible_os_family == 'Debian'
+
