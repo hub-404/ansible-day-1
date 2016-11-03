@@ -1,0 +1,5 @@
+- name: Setup Redis
+  hosts: redis-servers
+
+  roles:
+  - lmc.redis

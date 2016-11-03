@@ -1,0 +1,3 @@
+---
+redis_package: 'redis'
+redis_config: '/etc/redis.conf'

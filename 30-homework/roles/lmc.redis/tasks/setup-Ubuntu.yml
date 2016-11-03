@@ -1,0 +1,5 @@
+- name: install package
+  apt:
+    name: '{{ redis_deb_package }}'
+    state: '{{ redis_package_state }}'
+

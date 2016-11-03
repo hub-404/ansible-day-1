@@ -1,0 +1,15 @@
+---
+- name: "Setup vars"
+  include_vars: '{{ ansible_distribution }}.yml'
+
+- include: setup-Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- include: setup-CentOS.yml
+  when: ansible_distribution == 'CentOS'
+
+- name: start service
+  service:
+      name: '{{ redis_service_name }}'
+      state: '{{ redis_service_state }}'
+      enable: '{{ redis_service_enabled }}'

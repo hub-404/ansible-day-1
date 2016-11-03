@@ -1,0 +1,9 @@
+---
+# defaults file for lmc.redis
+redis_deb_package: redis
+redis_yum_package: redis
+redis_package_state: installed
+
+redis_services_name: redis
+redis_service_state: started
+redis_service_enabled: true
