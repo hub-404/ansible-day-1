@@ -1,0 +1,4 @@
+- name: Install ntp
+  apt: 
+    name: openntpd
+    state: installed 

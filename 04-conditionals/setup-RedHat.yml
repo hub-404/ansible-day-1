@@ -1,0 +1,4 @@
+- name: Install chrony
+  yum: 
+     name: chrony
+     state: installed 
