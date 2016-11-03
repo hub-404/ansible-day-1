@@ -7,4 +7,5 @@
     - restart nginx
 
 - name: Show IP address
-  debug: "msg=Check http://{{ ansible_default_ipv4.address }}/, please"
+  debug: 
+      msg: "Check http://{{ ansible_default_ipv4.address }}/, please"
