@@ -1,7 +1,4 @@
 ---
-- name: "Setup vars"
-  include_vars: '{{ ansible_distribution }}.yml'
-
 - include: setup-Ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
