@@ -1,13 +1,17 @@
 ---
 - name: Create web directory
   hosts: all
+  vars:
+      target_dir: /var/www/magic
+
   tasks:
   - name: Create diretory
     file:
-      path: /var/www/magic
+      path: '{{ target_dir }}'
       state: directory
     register: _made_directory
 
   - name: Create password
-    shell: 'ps ax | md5sum > /tmp/www/magic/password.txt'
+    shell: 'ps ax | md5sum > {{ target_dir }}/password.txt'
+    when: _made_directory.changed
 
