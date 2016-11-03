@@ -1,2 +1,2 @@
-- role: jtyr.yumrepo
-- role: geerlingguy.jenkins
+- name: jtyr.yumrepo
+- name: geerlingguy.jenkins
