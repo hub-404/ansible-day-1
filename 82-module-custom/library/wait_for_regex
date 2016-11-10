@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+from ansible.module_utils.basic import *
+
+module = AnsibleModule(
+    argument_spec = dict(
+        address   = dict(required=True, type='str', aliases=['url']),
+        regex     = dict(required=True, type='str'),
+        count     = dict(default=1, type='int'),
+    ),
+    supports_check_mode=True,
+)
+
+def main():
+    try:
+        import requests
+    except ImportError:
+        module.fail_json(msg="Unable to import requests")
+    retv = dict()
+    retv['looking_for'] = module.params['regex']
+
+    response = requests.get(module.params['address'])
+    retv['got_bytes'] = len(response.text)
+
+    import re
+    matches = re.findall(module.params['regex'], response.text)
+    retv['count'] = len(matches)
+
+    if len(matches) != module.params['count']:
+        retv['failed'] = True
+    
+    module.exit_json(changed=False, **retv)
+
+if __name__ == '__main__':
+    main()

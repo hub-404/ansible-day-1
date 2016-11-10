@@ -1,0 +1,19 @@
+---
+- name: Test  module
+  hosts: all
+  gather_facts: no
+
+  tasks:
+
+  - wait_for_regex:
+      url: http://baconipsum.com/api/?type=meat-and-filler 
+      regex: 'bacon'
+      count: 3
+    register: _got_bacon
+    ignore_errors: true
+    until: _got_bacon.count == 3
+    retries: 3
+    delay: 1
+
+#  - debug: 
+#      msg: '{{ _got_bacon }}'    
