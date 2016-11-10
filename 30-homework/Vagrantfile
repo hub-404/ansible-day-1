@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+VAGRANTFILE_API_VERSION = "2"
+
+if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil            
+    $ansible_mode = 'ansible_local'                                           
+else                                                                          
+    $ansible_mode = 'ansible'                                                 
+end       
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "geerlingguy/ubuntu1404"
+  #config.vm.box = "vStone/centos-7.x-puppet.3.x"
+  #config.vm.box = "debian/jessie64"
+
+  config.ssh.insert_key = false
+
+  config.vm.provider :virtualbox do |v|
+    v.memory = 1024
+    v.cpus = 2
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--ioapic", "on"]
+  #  v.linked_clone = true
+  end
+
+  config.vm.define "testme" do |logs|
+    logs.vm.hostname = "testme"
+    logs.vm.network :private_network, ip: "192.168.9.90"
+    logs.vm.network :forwarded_port, guest: 80, host: 8080
+
+
+    logs.vm.provision $ansible_mode do |ansible|
+      ansible.playbook = "main.yml"
+      ansible.sudo = true
+      ansible.verbose = true
+      ansible.groups = {
+          'redis-servers' => [ 'testme' ],
+      }
+    end
+  end
+
+end
