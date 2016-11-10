@@ -2,8 +2,7 @@
 cat <<EOF
 { "date": "$( date )",
   "me": "$0",
-  "params_file": "$*",
-  "params": "$( cat $1 )"
+  "params_file": "$*"
  }
 EOF
 
