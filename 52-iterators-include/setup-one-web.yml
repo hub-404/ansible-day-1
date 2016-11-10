@@ -1,2 +1,12 @@
-- name: "{{ item }}: Doing setup"
-  debug:  var=item
+- name: "{{ website }}: Doing setup"
+  debug:  var=website
+
+- name: "Create files"
+  copy:
+     content: '{{ item.text }}'
+     dest: '/var/www/{{ website }}/{{ item.name }}'
+  with_items:
+      - name: index.html
+        text: "Hello"
+      - name: robots.txt
+        text: 'Disallow: /'
