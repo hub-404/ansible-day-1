@@ -64,3 +64,14 @@
     copy:
       src: ansible.cfg
       dest: /etc/ansible/ansible.cfg
+
+  - name: Enable password auth
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      line: "PasswordAuthentication yes" 
+      regexp: "^PasswordAuthentication"
+    notify: "restart ssh"
+
+  handlers:
+    - name: "restart ssh"
+      service: name=sshd state=reloaded
