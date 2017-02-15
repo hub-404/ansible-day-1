@@ -3,14 +3,15 @@
   hosts: all
   user: root
   gather_facts: no
-#  serial: 25%
+# serial: 25%
   max_fail_percentage: 50
+#  any_errors_fatal: true
 
   tasks:
-    - set_fact: _random="{{item}}"
-      with_random_choice:
-         [ 1, 2, 3, 4, 5, 6 ] 
+    - set_fact: 
+         _random: "{{6|random}}"
+
     - assert: 
-         that: '{{ _random > 1 }}'
+         that: '{{ _random|int > 1 }}'
 
     - debug: msg="I'm alive"
