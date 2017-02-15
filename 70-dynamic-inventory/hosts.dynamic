@@ -15,6 +15,14 @@ cat <<EOF
 	"localhost"
         ],
         "vars": { "ansible_user": "root" }
-  } 
+  },
+  "_meta" : {
+       "hostvars" : {
+          "localhost": {
+             "ansible_connection": "local",
+             "the_answer": 42
+          }
+       }
+  }
 }
 EOF
