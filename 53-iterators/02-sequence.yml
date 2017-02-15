@@ -1,11 +1,11 @@
 ---
 - name: Show iterators
   hosts: all
-  user: root
+  gather_facts: no
 
   tasks:
   - debug: 
       msg: "{{ item }}"
     with_sequence: count=4
-    when: False
+#    when: False
 
