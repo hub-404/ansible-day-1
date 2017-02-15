@@ -18,5 +18,5 @@
       src: "facts/{{ item }}"
       dest: "/etc/ansible/facts.d/{{ item }}.fact"
       mode: 0755
-    with_items:  files_to_copy
+    with_items: '{{ files_to_copy }}'
 
