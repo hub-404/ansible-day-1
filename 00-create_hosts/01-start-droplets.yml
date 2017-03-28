@@ -34,7 +34,7 @@
   tasks:
   - lineinfile: 
        dest: "{{ inventory_path }}/hosts.do"
-       line: "{{ inventory_hostname }}   ansible_ssh_host={{ droplet.droplet.ip_address}} droplet_id={{ droplet.droplet.id }}"
+       line: "{{ inventory_hostname }}   ansible_host={{ droplet.droplet.ip_address}} _password=ansible007 droplet_id={{ droplet.droplet.id }}"
        state: present
        regexp: "^{{ inventory_hostname }}"
     delegate_to: localhost
