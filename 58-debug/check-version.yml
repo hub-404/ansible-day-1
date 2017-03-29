@@ -1,5 +1,5 @@
 ---
-- hosts: ansible-011
+- hosts: all
   user: root
   tasks:
   - assert:

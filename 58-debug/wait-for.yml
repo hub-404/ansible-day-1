@@ -1,6 +1,6 @@
 
 ---
-- hosts: ansible-011,ansible-002
+- hosts: all
   user: root
   tasks:
   - wait_for: 
