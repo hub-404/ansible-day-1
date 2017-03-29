@@ -1,0 +1,16 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+     var1:  'xyz'
+     var2:  ['xyz2']
+     var3:  ['zzz','rrr']
+
+  tasks:
+    - debug:
+        msg: '{{ var1|as_list }}'
+
+    - debug:
+        msg: '{{ var2|as_list }}'
+
+    - debug:
+        msg: '{{ var3|as_list }}'
