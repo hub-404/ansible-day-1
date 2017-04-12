@@ -5,7 +5,7 @@
   tasks:
   - name: Enable some services
     service: 
-      name: '{{ name }}'
+      name: '{{ item }}'
       enabled: true
     with_items: 
        - ssh
