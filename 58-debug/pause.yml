@@ -1,0 +1,10 @@
+- hosts: all
+  user: root
+  tasks:
+
+   - name: "Waiting for the Answer"
+     pause:
+       seconds: 42
+
+   - debug: 
+       msg: I'm still alive
