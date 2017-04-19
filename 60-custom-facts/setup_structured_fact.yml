@@ -11,5 +11,5 @@
   - name: Upload structured fact
     copy:
       content: "[ 1, 2, 3, 42 ]"
-      dest: /etc/ansible/facts.d/answer
+      dest: /etc/ansible/facts.d/answer.fact
       mode: 0444
