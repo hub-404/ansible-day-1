@@ -1,2 +1,5 @@
-- name: "{{ item }}: Doing setup"
+- name: "{{ item }}: Prepare web dir"
+  debug:  var=item
+
+- name: "{{ item }}: Web prepared"
   debug:  var=item

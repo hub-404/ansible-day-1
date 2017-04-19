@@ -1,5 +1,5 @@
 ---
-- name: Change ssh keys
+- name: Setup webs
   hosts: all
   user: root
   gather_facts: no
