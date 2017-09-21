@@ -1,0 +1,14 @@
+---
+- name: Iterators demo
+  hosts: all
+
+  tasks:
+  - name: Uplod banners
+    copy:
+       dest: '{{ item.name }}'
+       content: '{{ item.content }}'
+    with_items:
+       - name: /etc/issue
+         content: "Linux\n"
+       - name: /etc/motd
+         content: "Welcome!\n"
