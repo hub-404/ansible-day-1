@@ -1,6 +1,6 @@
 ---
 - name: Change users
-  hosts: ansible-011
+  hosts: all
   user: root
 
   tasks:
