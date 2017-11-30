@@ -8,4 +8,4 @@ do_sshkey: XXX # add your SSH key ID here
 ssh_keyfile: /home/ansible/.ssh/id_rsa
 ssh_user: ansible
 
-install_cowsay: False
+install_cowsay: True
