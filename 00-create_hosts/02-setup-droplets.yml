@@ -11,6 +11,7 @@
         comment: "Ansible" 
         password: "00./ayknmQFn."
         createhome: yes
+        shell: /bin/bash
 
   - name: Add ansible to sudoers
     copy:
