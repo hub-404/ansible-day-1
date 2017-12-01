@@ -6,8 +6,8 @@ INVENTORY_PATH=$( dirname $0 )
 
 #ansible-playbook -i hosts.setup 01-start-droplets.yml -vv -e "inventory_path=${INVENTORY_PATH}" 
 
-ansible  -i ~/bin/scaleway_inventory -u root -m ping -f 1  -l ansible-training ansible-training -vv
+env ANSIBLE_HOST_KEY_CHECKING=False ansible  -i ~/bin/scaleway_inventory -u root -m ping -f 1  -l ansible-training ansible-training -v
 
-ansible-playbook -i ~/bin/scaleway_inventory -l ansible-training 02-setup-droplets.yml -vv
+ansible-playbook -i ~/bin/scaleway_inventory -l ansible-training 02-setup-droplets.yml -v
 
-ansible-playbook -i ~/bin/scaleway_inventory -l ansible-training 03-setup-droplets.yml -vv
+ansible-playbook -i ~/bin/scaleway_inventory -l ansible-training 03-setup-droplets.yml -v
