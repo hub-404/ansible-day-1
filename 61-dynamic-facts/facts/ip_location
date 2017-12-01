@@ -1,2 +1,2 @@
 #!/bin/bash
-echo curl --silent --connect-timeout 1 ifconfig.co/json
+curl --silent --connect-timeout 1 ifconfig.co/json
