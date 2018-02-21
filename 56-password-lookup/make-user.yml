@@ -1,5 +1,5 @@
 ---
-- name: Change ssh keys
+- name: Create user
   hosts: all
   gather_facts: no
   vars: 
