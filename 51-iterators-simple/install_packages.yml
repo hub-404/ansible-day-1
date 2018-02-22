@@ -9,4 +9,6 @@
       yum:
         state: installed
         name: '{{item}}'
-      with_items: '{{ common_packages }}'
+      with_items: 
+        - '{{ common_packages }}'
+        - '{{ extra_packages|default(omit) }}'
