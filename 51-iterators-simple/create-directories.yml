@@ -1,0 +1,15 @@
+---
+- name: Create directories
+  hosts: all
+  user: root
+  gather_facts: no
+
+  tasks:
+    - name: Create program diretories
+      file:
+        name: '{{item}}'
+        state: directory
+      with_items: 
+         - /etc/very-important
+         - /var/lib/very-important
+         - /var/cache/very-important
