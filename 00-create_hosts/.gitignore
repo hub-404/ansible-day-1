@@ -1,2 +1,2 @@
-hosts.do
-*.retry
+# This is created by python scripts
+hosts
