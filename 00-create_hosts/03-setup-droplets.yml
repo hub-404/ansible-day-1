@@ -19,6 +19,23 @@
        src: sudoers_ansible
        dest: /etc/sudoers.d/ansible
 
+  - name: Install epel
+    yum: name=epel-release state=installed
+    when: ansible_distribution == "CentOS"
+
+  - name: Install needed packages
+    package:
+         name:
+            - vim
+            - ansible
+            - git
+            - psmisc
+            - tmux
+            - tree
+            - mosh
+         state: present
+   
+
   - name: Install cowsay
     package:
       name: cowsay
