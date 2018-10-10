@@ -2,9 +2,23 @@
 - name: Start up
   hosts: all
   gather_facts: no
-
+  user: root
 
   tasks:
+
+  - name: Create user ansible with password XXX
+    user:
+        name: '{{ ssh_user }}'
+        comment: "Ansible"
+        password: "{{ demo_password|password_hash('sha512', 65534|random(seed=inventory_hostname)|string) }}"
+        createhome: yes
+        shell: /bin/bash
+
+  - name: Add ansible to sudoers
+    copy:
+       src: sudoers_ansible
+       dest: /etc/sudoers.d/ansible
+
   - name: Install cowsay
     package:
       name: cowsay
