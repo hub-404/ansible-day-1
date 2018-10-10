@@ -1,7 +1,6 @@
 ---
 - name: Start up
   hosts: all
-  gather_facts: no
   user: root
 
   tasks:
@@ -34,7 +33,7 @@
             - tree
             - mosh
          state: present
-   
+
 
   - name: Install cowsay
     package:
