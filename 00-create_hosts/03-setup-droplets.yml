@@ -2,11 +2,9 @@
 - name: Start up
   hosts: all
   gather_facts: no
-  user: root
-  become_user: ansible
-  become: yes
-  tasks:
 
+
+  tasks:
   - name: Install cowsay
     package:
       name: cowsay
@@ -56,11 +54,16 @@
           autocmd BufRead *.yaml,*.yml setlocal syntax=yaml autoindent sw=8 ts=8 sts=8 expandtab colorcolumn=78,120
           colorscheme ron
        dest: /home/ansible/.vimrc
+       owner: '{{ ssh_user }}'
+       group: '{{ ssh_user }}'
 
   - name: Clone day-1
     git:
        dest: /home/ansible/day-001
        repo: https://github.com/hub-404/ansible-day-1
+    become: true
+    become_user: '{{ ssh_user }}'
+
 
 
   handlers:
