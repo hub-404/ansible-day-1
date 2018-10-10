@@ -21,8 +21,8 @@
 
   - name: Read SSH pubkey
     shell: cat {{ ssh_keyfile }}.pub
-    always_run: True
-    changed_when: False
+    check_mode: false
+    changed_when: false
     register: _ssh_keydata
 
   - name: Add the key
