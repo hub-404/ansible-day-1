@@ -1,0 +1,47 @@
+- name: Setup Vagrant box
+  hosts: all
+
+  tasks:
+   - ping:
+
+   - name: Add git 
+     yum:
+        name: git
+     become: yes
+
+   - name: Load bootstrap 
+     git: 
+        repo: https://github.com/hub-404/ansible-day-1
+        dest: /home/vagrant/ansible-day-1
+
+   - name: Create ansible Inventory
+     become: true
+     copy:
+       backup: true
+       dest: /etc/ansible/hosts
+       content: |
+         vagrantbox    ansible_connection=local ansible_become=true 
+
+   - name: Install cowsay
+     become: true
+     yum:
+        name: 
+           - vim
+           - cowsay
+        state: present
+
+   - name: Create ssh-key
+     delegate_to: localhost
+     shell: ssh-keygen -P '' -f '/home/vagrant/.ssh/id_rsa'
+     args:
+       creates: ~/.ssh/id_rsa
+
+   - name: Upload the key     
+     become: true
+     authorized_key:
+        key: '{{ lookup("file", "~/.ssh/id_rsa.pub") }}'
+        user: root
+        state: present
+
+      
+
