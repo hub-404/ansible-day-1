@@ -9,7 +9,7 @@
       file:
         name: '{{item}}'
         state: directory
-      with_items: 
+      loop: 
          - /etc/very-important
          - /var/lib/very-important
          - /var/cache/very-important

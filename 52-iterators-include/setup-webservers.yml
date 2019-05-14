@@ -10,5 +10,5 @@
        - secure.root.cz
   tasks:
     - name: Setup web sites
-      include: setup-one-web.yml
-      with_items: '{{ mysites }}'
+      include_tasks: setup-one-web.yml
+      loop: '{{ mysites }}'
