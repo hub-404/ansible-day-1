@@ -81,7 +81,7 @@
   - name: Setup .vimrc
     copy:
        content: |
-          autocmd BufRead *.yaml,*.yml setlocal syntax=yaml autoindent sw=8 ts=8 sts=8 expandtab colorcolumn=78,120
+          autocmd BufRead *.yaml,*.yml setlocal syntax=yaml autoindent sw=4 ts=8 sts=4 expandtab colorcolumn=78,120
           colorscheme ron
        dest: /home/ansible/.vimrc
        owner: '{{ ssh_user }}'
