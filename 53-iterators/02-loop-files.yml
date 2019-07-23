@@ -3,7 +3,7 @@
   hosts: all
 
   tasks:
-  - name: Uplod banners
+  - name: Upload banners
     copy:
        dest: '{{ item.name }}'
        content: '{{ item.content }}'
