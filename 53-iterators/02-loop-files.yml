@@ -7,7 +7,7 @@
     copy:
        dest: '{{ item.name }}'
        content: '{{ item.content }}'
-    with_items:
+    loop:
        - name: /etc/issue
          content: "Linux\n"
        - name: /etc/motd

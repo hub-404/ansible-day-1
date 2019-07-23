@@ -7,6 +7,6 @@
     service: 
       name: '{{ item }}'
       enabled: true
-    with_items: 
+    loop: 
        - ssh
        - nginx
