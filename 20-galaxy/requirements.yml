@@ -1,2 +1,5 @@
 - name: jtyr.yumrepo
 - name: geerlingguy.jenkins
+
+# check https://docs.ansible.com/ansible/latest/reference_appendices/galaxy.html#installing-multiple-roles-from-a-file 
+# for details
