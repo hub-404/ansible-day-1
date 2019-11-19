@@ -1,0 +1,19 @@
+- name: Show modifiers
+  hosts: all
+  user: root
+  gather_facts: no
+
+  tasks:
+    - name: Check localhost exist
+      lineinfile:
+         path: /etc/hosts
+         regexp: '^[0-9].* localhost'
+         state: absent
+      check_mode: yes
+      register: _localhost
+
+    - name: Fail when localhost is present
+      fail:
+         msg: "/etc/hosts contains localhost"
+      when: _localhost.changed
+
