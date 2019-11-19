@@ -1,0 +1,8 @@
+- name: Shell module demo
+  hosts: all
+
+  tasks:
+     - name: Get time
+       gettime:
+          some: params
+
