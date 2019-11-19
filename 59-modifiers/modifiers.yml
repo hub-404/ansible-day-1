@@ -1,13 +1,17 @@
----
 - name: Show modifiers
   hosts: all
   user: root
   gather_facts: no
 
   tasks:
-    - name: Do something
-      shell: "cat /proc/loadavg"
-      register: _loadavg
-      changed_when: _loadavg.rc != 0
-      failed_when: _loadavg.rc in [1,2]
+    - name: Get hostname
+      command: hostname
+      register: _result
+      changed_when: false
       check_mode: false
+
+    - set_fact:
+        hostname: '{{ _result.stdout }}'
+
+    - debug:
+        msg: "My hostname is {{ hostname }}"
