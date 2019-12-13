@@ -1,0 +1,7 @@
+- name: use facts from playbook
+  hosts: all
+
+  tasks:
+   - name: Show me the tags
+     debug:
+       msg: 'Tags are {{ ansible_local.tags }}'
