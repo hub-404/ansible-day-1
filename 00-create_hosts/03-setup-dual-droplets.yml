@@ -1,0 +1,118 @@
+---
+- name: Start up
+  hosts: all
+  user: root
+
+  tasks:
+  - name: Create user ansible with password XXX
+    user:
+        name: '{{ ssh_user }}'
+        comment: "Ansible"
+        password: "{{ demo_password|password_hash('sha512', 65534|random(seed=inventory_hostname)|string) }}"
+        createhome: yes
+        shell: /bin/bash
+
+  - name: Add ansible to sudoers
+    copy:
+       src: sudoers_ansible
+       dest: /etc/sudoers.d/ansible
+
+  - name: Install epel
+    yum: name=epel-release state=installed
+    when: ansible_distribution == "CentOS"
+
+  - name: Install needed packages
+    package:
+         name:
+            - vim
+            - ansible
+            - git
+            - psmisc
+            - tmux
+            - tree
+            - mosh
+            - jq
+            - mc
+         state: present
+
+  - name: Install cowsay
+    package:
+      name: cowsay
+      state: installed
+    when: install_cowsay
+
+  - name: Enable password auth
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      line: "PasswordAuthentication yes"
+      regexp: "^PasswordAuthentication"
+    notify: "restart ssh"
+
+  - meta: flush_handlers
+
+  handlers:
+    - name: "restart ssh"
+      service: name=sshd state=reloaded
+
+- name: Setup master_nodes nodes
+  hosts: masters
+  user: root
+
+  tasks:
+  - name: Create ssh-key
+    become_user: '{{ ssh_user }}'
+    become: yes
+    shell: ssh-keygen -f {{ ssh_keyfile }} -P ''
+    args:
+        creates: "{{ ssh_keyfile }}"
+
+  - name: Read SSH pubkey
+    shell: cat {{ ssh_keyfile }}.pub
+    check_mode: false
+    changed_when: false
+    register: _ssh_keydata
+
+  - name: Add the key
+    with_items: [ root, ansible ]
+    authorized_key:
+       key: '{{ _ssh_keydata.stdout }}'
+       user: '{{ item }}'
+       state: present
+
+  - name: Add the key
+    with_items: [ root, ansible ]
+    authorized_key:
+       key: '{{ _ssh_keydata.stdout }}'
+       user: '{{ item }}'
+       state: present
+    delegate_to:
+        '{{ worker_node }}'
+
+  - name: Setup ansible inventory
+    copy:
+      content: |
+        ansible   ansible_host={{ ansible_host }} # ansible_user=root
+        worker    ansible_host={{ worker_node }} # ansible_user=root
+      dest: /etc/ansible/hosts
+
+  - name: Setup ansible.cfg
+    copy:
+      src: ansible.cfg
+      dest: /etc/ansible/ansible.cfg
+
+  - name: Setup .vimrc
+    copy:
+       content: |
+          autocmd BufRead *.yaml,*.yml setlocal syntax=yaml autoindent sw=4 ts=8 sts=4 expandtab colorcolumn=78,120 cursorcolumn
+          colorscheme ron
+       dest: /home/ansible/.vimrc
+       owner: '{{ ssh_user }}'
+       group: '{{ ssh_user }}'
+
+  - name: Clone day-1
+    git:
+       dest: /home/ansible/day-001
+       repo: https://github.com/hub-404/ansible-day-1
+    become: true
+    become_user: '{{ ssh_user }}'
+
