@@ -17,7 +17,8 @@
       debug:
         msg: 'test_var = {{ hostvars["ansible"].test_var }}'
 
-    - name: 
+    - name: This should fail
       debug: 
-        var: 'test_var = {{ hostvars["ansible"].test_var }}'
+        var: 'test_var'
+      ignore_errors: yes
   
