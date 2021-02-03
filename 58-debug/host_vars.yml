@@ -1,0 +1,23 @@
+---
+- name: Create variable
+  hosts: master_nodes
+  gather_facts: no
+
+  tasks:
+  - name: Create test_var
+    set_fact:
+      test_var: 24
+
+- name: Use variable
+  hosts: worker_nodes
+  gather_facts: no
+
+  tasks:
+    - name: Debug test_var
+      debug:
+        msg: 'test_var = {{ hostvars["ansible"].test_var }}'
+
+    - name: 
+      debug: 
+        var: 'test_var = {{ hostvars["ansible"].test_var }}'
+  
