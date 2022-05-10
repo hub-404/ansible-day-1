@@ -13,5 +13,5 @@
     copy:
        content: "This machine is managed by Ansible"
        dest: /etc/motd
-    when: _motd_exists|failed
+    when: _motd_exists is failed
 
