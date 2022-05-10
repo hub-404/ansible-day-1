@@ -1,10 +1,4 @@
 ---
-do_token: XXX  # add your token here
-do_region: fra1
-do_size: 512mb
-do_image: centos-7-0-x64
-do_sshkey: XXX # add your SSH key ID here
-
 ssh_keyfile: /home/ansible/.ssh/id_rsa
 ssh_user: ansible
 demo_password: nbusr123
