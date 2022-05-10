@@ -87,12 +87,18 @@
        state: present
     delegate_to:
         '{{ worker_node }}'
+    when: worker_node is defined
 
   - name: Setup ansible inventory
     copy:
       content: |
+        [master_nodes]
         ansible   ansible_host={{ ansible_host }} # ansible_user=root
+
+        {% if worker_node is defined %}
+        [worker_nodes]
         worker    ansible_host={{ worker_node }} # ansible_user=root
+        {% endif %}
       dest: /etc/ansible/hosts
 
   - name: Setup ansible.cfg
