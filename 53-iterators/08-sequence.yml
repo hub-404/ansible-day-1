@@ -7,5 +7,4 @@
   - debug: 
       msg: "{{ item }}"
     with_sequence: count=4
-#    when: False
 

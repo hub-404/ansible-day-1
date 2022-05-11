@@ -1,0 +1,25 @@
+---
+# 02-loop-files.yml
+- name: Iterators demo
+  hosts: all
+  become: yes
+
+  vars:
+    config_files:
+       - src: "main.j2"
+         dest: "/etc/foo/main.conf"
+       - src: "prod.j2"
+         dest: "/etc/foo/prod.conf"
+
+  tasks:
+  - name: Create config dirs
+    file:
+      path: '{{ item.dest|dirname }}'
+      state: directory
+    loop: '{{ config_files }}'
+ 
+  - name: Upload config
+    template:
+       src: '{{ item.src }}'
+       dest: '{{ item.dest }}'
+    loop: '{{ config_files }}'
