@@ -12,6 +12,7 @@
     register: _made_directory
 
   - name: Create password
-    shell: 'ps ax | md5sum > {{ target_dir }}/password.txt'
+    shell: 
+        ps ax | md5sum > {{ target_dir }}/password.txt
     when: _made_directory.changed
 
