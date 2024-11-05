@@ -38,7 +38,7 @@
   - name: Install cowsay
     package:
       name: cowsay
-      state: installed
+      state: present
     when: install_cowsay
 
   - name: Enable password auth
@@ -48,11 +48,28 @@
       regexp: "^PasswordAuthentication"
     notify: "restart ssh"
 
+  - name: Enable password auth
+    lineinfile:
+       dest: /etc/ssh/sshd_config.d/50-cloud-init.conf
+       line: "PasswordAuthentication yes"
+       regexp: "^PasswordAuthentication"
+    ignore_errors: yes
+    notify: "restart ssh"
+
+
+  - name: Enable password auth
+    lineinfile:
+       dest: /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+       line: "PasswordAuthentication yes"
+       regexp: "^PasswordAuthentication"
+    ignore_errors: yes
+    notify: "restart ssh"
+
   - meta: flush_handlers
 
   handlers:
     - name: "restart ssh"
-      service: name=sshd state=reloaded
+      service: name=ssh state=reloaded
 
 - name: Setup master_nodes nodes
   hosts: masters
@@ -89,6 +106,13 @@
         '{{ worker_node }}'
     when: worker_node is defined
 
+  - name: Create 
+    file:
+      path: /etc/ansible
+      state: directory
+      mode: '0755'
+      
+
   - name: Setup ansible inventory
     copy:
       content: |
@@ -109,7 +133,7 @@
   - name: Setup .vimrc
     copy:
        content: |
-          autocmd BufRead *.yaml,*.yml setlocal syntax=yaml autoindent sw=4 ts=8 sts=4 expandtab colorcolumn=78,120 cursorcolumn
+          autocmd BufRead *.yaml,*.yml setlocal syntax=yaml autoindent sw=4 ts=8 sts=4 expandtab colorcolumn=78,120
           colorscheme ron
        dest: /home/ansible/.vimrc
        owner: '{{ ssh_user }}'
