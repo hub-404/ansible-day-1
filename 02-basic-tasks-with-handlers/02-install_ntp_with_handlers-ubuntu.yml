@@ -4,7 +4,7 @@
 
   tasks:
   - name: Install NTP
-    apt: name=openntpd state=installed
+    apt: name=openntpd state=present
 
   - name: Provide config file
     copy:
