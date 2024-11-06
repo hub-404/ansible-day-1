@@ -3,9 +3,11 @@
   hosts: all
   tasks:
 
-  - include_tasks: setup-RedHat.yml 
+  - name: Handle RedHat NTP setup
+    include_tasks: setup-RedHat.yml 
     when: ansible_os_family == 'RedHat'
 
-  - include_tasks: setup-Debian.yml 
+  - name: Handle Debian NTP setup
+    include_tasks: setup-Debian.yml 
     when: ansible_os_family == 'Debian'
 
