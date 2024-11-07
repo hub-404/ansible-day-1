@@ -5,7 +5,7 @@ hosts=$( sort -R hosts.txt )
 
 cat <<EOF
 {
-  "all ": {
+  "all": {
 	"hosts": [
 EOF
 for i in $hosts; do 
