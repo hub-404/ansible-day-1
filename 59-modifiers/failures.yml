@@ -3,8 +3,8 @@
   hosts: all
   user: root
   gather_facts: no
-# serial: 25%
-  max_fail_percentage: 50
+#  serial: 25%
+#  max_fail_percentage: 50
 #  any_errors_fatal: true
 
   tasks:
