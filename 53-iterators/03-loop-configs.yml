@@ -1,5 +1,6 @@
 ---
-# 02-loop-files.yml
+# 03-loop-configs.yml
+#
 - name: Iterators demo
   hosts: all
   become: yes
