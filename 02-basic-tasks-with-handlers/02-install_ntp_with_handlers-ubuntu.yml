@@ -13,15 +13,11 @@
     notify: 
        - Restart NTP
 
-  - meta: flush_handlers
-   
   - name: Start NTP
     service:
       name: openntpd
       state: started
       enabled: true
-    notify: 
-       - Restart NTP
 
   handlers:
   - name: Restart NTP
@@ -29,3 +25,5 @@
       name: openntpd
       state: restarted
 
+# TODO: show flush_handlers 
+   
