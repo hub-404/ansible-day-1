@@ -1,0 +1,8 @@
+- name: Lookup demo
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Look up A (IPv4) records for example.org
+      ansible.builtin.debug:
+        msg: "{{ lookup('community.dns.lookup', 'na-mytince.cz.') }}"
