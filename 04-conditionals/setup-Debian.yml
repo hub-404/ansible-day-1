@@ -1,4 +1,6 @@
-- name: Install ntp
+# setup-Debian.yml
+ 
+- name: Install ntp (apt)
   apt: 
     name: openntpd
     state: present

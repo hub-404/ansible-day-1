@@ -1,4 +1,6 @@
-- name: Install chrony
-  yum: 
+# setup-RedHat.yml
+#
+- name: Install chrony (RedHat/dnf)
+  dnf: 
      name: chrony
      state: present
