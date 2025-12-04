@@ -13,6 +13,6 @@
 
     - name: Ensure age key
       shell:
-         age-key -o {{ key_location }}
+         age-keygen -o {{ key_location }}
       args:
         creates: '{{ key_location }}'
