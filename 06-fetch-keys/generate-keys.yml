@@ -16,3 +16,9 @@
          age-keygen -o {{ key_location }}
       args:
         creates: '{{ key_location }}'
+
+    - name: Fetch key to control machine
+      fetch:
+        src: '{{ key_location }}'
+        dest: './keys/{{ inventory_hostname }}/keys.txt'
+        flat: true
