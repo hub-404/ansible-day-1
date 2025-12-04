@@ -27,7 +27,7 @@ def main():
     result = cursor.fetchall()
     if len(result) == 0 and domain_state == 'absent':
         module.exit_json(changed=False)
-	return
+        return
     if len(result) and domain_state == 'absent':
         cursor.execute('DELETE FROM domains WHERE name=?', [domain_name])
         database.commit()
