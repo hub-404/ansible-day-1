@@ -22,3 +22,9 @@
         src: '{{ key_location }}'
         dest: './keys/{{ inventory_hostname }}/keys.txt'
         flat: true
+
+    - name: Load keys to fact
+      set_fact:
+        remote_key:
+          "{{ lookup('file', './keys/' + inventory_hostname + '/keys.txt') }}"
+
