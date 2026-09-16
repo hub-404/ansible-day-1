@@ -4,6 +4,7 @@
   user: root
 
   tasks:
+
   - name: Create user ansible with password XXX
     user:
         name: '{{ ssh_user }}'
@@ -11,6 +12,7 @@
         password: "{{ demo_password|password_hash('sha512', 65534|random(seed=inventory_hostname)|string) }}"
         createhome: yes
         shell: /bin/bash
+    # notes: add python-passlib to control host when required
 
   - name: Add ansible to sudoers
     copy:
@@ -25,14 +27,18 @@
     package:
          name:
             - vim
-            - ansible
+            # - ansible
             - git
             - psmisc
+            - joe
+            - nano
             - tmux
             - tree
             - mosh
             - jq
             - mc
+            - ansible
+            - sqlite3
          state: present
 
   - name: Install cowsay
@@ -117,12 +123,15 @@
     copy:
       content: |
         [master_nodes]
-        ansible   ansible_host={{ ansible_host }} # ansible_user=root
+        ansible   ansible_host={{ ansible_host }} 
 
         {% if worker_node is defined %}
         [worker_nodes]
-        worker    ansible_host={{ worker_node }} # ansible_user=root
+        worker    ansible_host={{ worker_node }} 
         {% endif %}
+
+        [all:vars]
+        ansible_user = root
       dest: /etc/ansible/hosts
 
   - name: Setup ansible.cfg
@@ -134,7 +143,7 @@
     copy:
        content: |
           autocmd BufRead *.yaml,*.yml setlocal syntax=yaml autoindent sw=4 ts=8 sts=4 expandtab colorcolumn=78,120
-          colorscheme ron
+          colorscheme morning
        dest: /home/ansible/.vimrc
        owner: '{{ ssh_user }}'
        group: '{{ ssh_user }}'
